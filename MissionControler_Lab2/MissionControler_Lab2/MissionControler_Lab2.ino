@@ -1,4 +1,4 @@
-// Feather9x_TX
+﻿// Feather9x_TX
 // -*- mode: C++ -*-
 // Example sketch showing how to create a simple messaging client (transmitter)
 // with the RH_RF95 class. RH_RF95 class does not provide for addressing or
@@ -110,13 +110,13 @@ String getMail() {
 		else
 		{
 			Serial.println("Receive failed");
-			return("error")
+			return("error");
 		}
 	}
 	else
 	{
 		Serial.println("ERROR");
-		return "error"; 
+		return "error";
 	}
 
 
@@ -132,17 +132,17 @@ bool Parach = 0;
 
 void loop()
 {
-	thrust = rand() % 100; 
+	thrust = rand() % 100;
 	Serial.println(thrust);
-	String mail = "Arnor"+(String)thrust;
+	String mail = "Arnor" + (String)thrust;
 	tmp++;
-	
-	
+
+
 
 	Serial.println("-------------");
 	sendMail(mail);
 	getMail();
-	delay(500);  
+	delay(500);
 	//helllo dwlsfasdf
 
 }
