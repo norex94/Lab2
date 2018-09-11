@@ -17,7 +17,7 @@
 #define RFM95_INT  10   // "D"
 
 
-const int MyID = 10;
+const int MyID = 5;
 
 
 
@@ -76,7 +76,7 @@ void sendMail(String radiopacket) {
 
 	//Serial.println("Sending...");
 	delay(10);
-	rf95.send((uint8_t *)radiopacket.c_str(), 10);
+	rf95.send((uint8_t *)radiopacket.c_str(), 20);
 	//Serial.println("Waiting for packet to complete...");
 	delay(10);
 	rf95.waitPacketSent(500);
@@ -91,21 +91,21 @@ String getMail() {
 	uint8_t len = sizeof(buf);
 
 	//Serial.println("Waiting for reply...");
-	if (rf95.waitAvailableTimeout(800))
+	if (rf95.waitAvailableTimeout(1000))
 	{
 		// Should be a reply message for us now   
 		if (rf95.recv(buf, &len))
 		{
-			Serial.print("id:");  Serial.print(rf95.headerId());
+			
 			Serial.print(" Message: ");
-			String tmp = (char*)buf;
+
+
+			String tmp =(String)rf95.headerId()+","+(char*)buf+";";
 			Serial.println(tmp);
-
-			return tmp;
-
 
 			Serial.print("RSSI: ");
 			Serial.println(rf95.lastRssi(), DEC);
+			return tmp;
 		}
 		else
 		{
@@ -128,13 +128,17 @@ int thrust;
 bool Engine = 0;
 bool Parach = 0;
 
-
+int cheackSum() {return tmp + thrust + Engine + Parach; }
 
 void loop()
 {
 	thrust = rand() % 100;
-	Serial.println(thrust);
-	String mail = "Arnor" + (String)thrust;
+	Engine = rand() % 2; 
+	Parach = rand() % 2;
+
+	//tmp thurst Parach Cheaksum
+
+	String mail = "#"+(String)tmp + "," + (String)thrust + "," + (String)Parach + "," + (String)cheackSum()+";";
 	tmp++;
 
 
@@ -144,5 +148,6 @@ void loop()
 	getMail();
 	delay(500);
 	//helllo dwlsfasdf
+	mail = "";
 
 }
