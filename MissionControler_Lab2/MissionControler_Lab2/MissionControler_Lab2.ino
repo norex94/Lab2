@@ -1,12 +1,12 @@
 ﻿#include <SPI.h>
 #include <RH_RF95.h>
 #include <cstdlib>
-#include <vector>
-#include <string>
-#include <sstream>
-#include <iostream>
+
 
 using namespace std; 
+
+
+//#include <vector>
 
 #define RFM95_CS  5   // "B"
 #define RFM95_RST 6   // "A"
@@ -109,17 +109,41 @@ String getMail() {
 
 
 }
-
+/*
 String MessageSplit(String mail) {
 
-	vector<int> values; 
+	vector<String> values; 
+	int i = 0; 
 
-	for (unsigned int i; i < 30; i++) {
+	String tmp;
 
-		
 
+	while (mail[i] != ';') {
 		
 		
+		if (mail[i] == ',') {
+
+			values.push_back(tmp);
+			tmp = "";
+
+		}
+		else {
+
+			tmp = tmp + mail[i];
+					   
+		}
+
+
+
+
+	}
+
+	
+
+
+	while(i < values.size()){
+		Serial.println(values.at(i));
+		Serial.print("#");
 
 	}
 
@@ -127,9 +151,8 @@ String MessageSplit(String mail) {
 
 
 
-
 }
-
+*/
 
 
 
@@ -179,7 +202,7 @@ void loop()
 	Serial.print("RSSI: ");//Samband á milli síðasta sendingar
 	Serial.println(rf95.lastRssi(), DEC);
 
-	delay(500);
+	delay(500); 
 	
 	MyMail = "";
 
