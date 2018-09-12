@@ -1,24 +1,20 @@
-﻿// Feather9x_TX
-// -*- mode: C++ -*-
-// Example sketch showing how to create a simple messaging client (transmitter)
-// with the RH_RF95 class. RH_RF95 class does not provide for addressing or
-// reliability, so you should only use RH_RF95 if you do not need the higher
-// level messaging abilities.
-// It is designed to work with the other example Feather9x_RX
-
-#include <SPI.h>
+﻿#include <SPI.h>
 #include <RH_RF95.h>
 #include <cstdlib>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <iostream>
 
-
+using namespace std; 
 
 #define RFM95_CS  5   // "B"
 #define RFM95_RST 6   // "A"
 #define RFM95_INT  10   // "D"
 
 
-const int MyID = 5;
-
+const int MyID = 35;
+const int FriendID = 8;
 
 
 // Change to 434.0 or other frequency, must match RX's freq!
@@ -96,16 +92,7 @@ String getMail() {
 		// Should be a reply message for us now   
 		if (rf95.recv(buf, &len))
 		{
-			
-			Serial.print(" Message: ");
-
-
-			String tmp =(String)rf95.headerId()+","+(char*)buf+";";
-			Serial.println(tmp);
-
-			Serial.print("RSSI: ");
-			Serial.println(rf95.lastRssi(), DEC);
-			return tmp;
+			return (char*)buf;
 		}
 		else
 		{
@@ -123,12 +110,36 @@ String getMail() {
 
 }
 
+String MessageSplit(String mail) {
+
+	vector<int> values; 
+
+	for (unsigned int i; i < 30; i++) {
+
+		
+
+		
+		
+
+	}
+
+
+
+
+
+
+}
+
+
+
+
 int tmp = 0;
 int thrust;
 bool Engine = 0;
 bool Parach = 0;
 
 int cheackSum() {return tmp + thrust + Engine + Parach; }
+String RecivedMail;
 
 void loop()
 {
@@ -138,16 +149,38 @@ void loop()
 
 	//tmp thurst Parach Cheaksum
 
-	String mail = "#"+(String)tmp + "," + (String)thrust + "," + (String)Parach + "," + (String)cheackSum()+";";
+	String MyMail = "#"+(String)tmp + "," + (String)thrust + "," + (String)Parach + "," + (String)cheackSum()+";";
 	tmp++;
 
 
 
-	Serial.println("-------------");
-	sendMail(mail);
-	getMail();
+	Serial.println("--------------------------");
+	sendMail(MyMail); // Sendi mitt skilaboð
+
+	RecivedMail = getMail(); // Sæki skilaboð
+
+
+
+
+	if (rf95.headerId() == FriendID) { // Chekka hvort þetta sé minn póstur
+		Serial.print("Got mail from FRIEND: ");
+		Serial.println(RecivedMail);
+
+
+	}
+	else { //Ekki minn póstur, prenta samt út
+		Serial.print("Got random Mail from ID: ");
+		Serial.print(rf95.headerId());
+		Serial.print("; Message: ");
+		Serial.println(RecivedMail);
+
+	}
+
+	Serial.print("RSSI: ");//Samband á milli síðasta sendingar
+	Serial.println(rf95.lastRssi(), DEC);
+
 	delay(500);
-	//helllo dwlsfasdf
-	mail = "";
+	
+	MyMail = "";
 
 }
