@@ -273,7 +273,6 @@ extern float j1f(float);
 extern float jnf(int, float);
 
 
-#include "MissionControler_Lab2.ino"
-#include "Flight Controller.ino"
+#include "Sketch1.ino"
 #endif
 #endif
