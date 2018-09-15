@@ -8,13 +8,13 @@
 // Change to 434.0 or other frequency, must match RX's freq!
 #define RF95_FREQ 434.0
 
-#define RFM95_CS      5
-#define RFM95_RST     6
+#define RFM95_CS		5
+#define RFM95_RST		6
 #define ERRORLED		9
-#define RFM95_INT     10
+#define RFM95_INT		10
 
 #define THROTTLE		14
-#define KILL_ENGINE	15
+#define KILL_ENGINE		15
 #define SELF_DESTRUCT	16
 
 //Mission Control caller ID
@@ -272,7 +272,7 @@ void loop()
 	}
 	if (FAIL_SAFE)
 	{
-		setLCD_RED();
+	
 		setCommandType(1);
 		setState(11);
 		sendCOMMAND();
